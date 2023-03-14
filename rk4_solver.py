@@ -25,14 +25,14 @@ def effector_cell_population_function():
     """
     Creates a differential equation to model an effector cell population over time
     
-    Parameters
+    Parameters: TODO
     ----------
     num1 : int
         First number to add.
     num2 : int
         Second number to add.
 
-    Returns
+    Returns: TODO
     -------
     int
         The sum of ``num1`` and ``num2``.
