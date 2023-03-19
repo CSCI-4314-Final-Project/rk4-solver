@@ -86,7 +86,11 @@ def chemotherapy_drug_concentration_function(gamma,M,V_m):
     dM = -gamma*M+V_m
     return dM
 
-def newton_raphson(function, derivative, initial_guess, x, initial_y, step_size, error):
+def timeAxis(start, end, stepNumber): # Helps with defining time access for numerical simulations. Will add docstring later
+    step_size = (end-start) / stepNumber
+    return [start + i * step_size for i in range(stepNumber)]
+
+def newton_raphson(function, derivative, initial_guess, t, initial_y, step_size, error):
     """
     Solves a (set of) differential equations through the Newton-Raphson (Newton's) method. Simple method for root finding
     
@@ -98,8 +102,8 @@ def newton_raphson(function, derivative, initial_guess, x, initial_y, step_size,
         Derivative of function input
     initial_guess : float
         Initial guess for root
-    x : float
-        Initial x value
+    t : int
+        timestep
     initial_y: float
         Initial y value
     step_size: int
@@ -112,12 +116,82 @@ def newton_raphson(function, derivative, initial_guess, x, initial_y, step_size,
     float
         Approximation of root of derivative given starting x and y values.
     """
-    guess = initial_guess - (initial_guess - function(x, initial_guess) * step_size - initial_y) / (1 + derivative(x, initial_guess) * step_size)
-
+    guess = initial_guess - (initial_guess - function(t, initial_guess) * step_size - initial_y) / (1 + derivative(t, initial_guess) * step_size) 
+    print(guess) 
     if np.abs((guess - initial_guess) / initial_guess) < error:
         return guess
     else:
-        newton_raphson(function, derivative, guess, x, initial_y, step_size, error)
+        newton_raphson(function, derivative, guess, t, initial_y, step_size, error)
+
+def newton_raphson2DY(function, derivative, initial_x, initial_y, t, inity, step_size, error):
+    """
+    Solves a (set of) differential equations through the Newton-Raphson (Newton's) method. Simple method for root finding
+    
+    Parameters:
+    ----------
+    function : func
+        Function definition for which we are numerically solving
+    derivative : func
+        Derivative of function input
+    initial_guess : float
+        Initial guess for root
+    initial_x: float
+        Initial y value
+    initial_y: float
+        Initial y value
+    t : int
+        timestep
+    step_size: int
+        Step size to determine how far we are looking for root
+    error: float
+        Newton's method requires a tolerance for how close the root is to predicted
+    
+    Returns:
+    -------
+    float
+        Approximation of root of derivative given starting x and y values.
+    """
+    guess = initial_y - (initial_y - function(t, initial_y, initial_x) * step_size - inity) / (1 + derivative(t, initial_y, initial_x) * step_size) # Derivative with respect to y instead of x
+    print(guess) 
+    if np.abs((guess - initial_y) / initial_y) < error:
+        return guess
+    else:
+        newton_raphson2DY(function, derivative, initial_x, guess, t, inity, step_size, error)
+
+def newton_raphson2DX(function, derivate, initial_x, initial_y, t, inity, step_size, error):
+    """
+    Solves a (set of) differential equations through the Newton-Raphson (Newton's) method. Simple method for root finding
+    
+    Parameters:
+    ----------
+    function : func
+        Function definition for which we are numerically solving
+    derivative : func
+        Derivative of function input
+    initial_guess : float
+        Initial guess for root
+    initial_x: float
+        Initial y value
+    initial_y: float
+        Initial y value
+    t : int
+        timestep
+    step_size: int
+        Step size to determine how far we are looking for root
+    error: float
+        Newton's method requires a tolerance for how close the root is to predicted
+    
+    Returns:
+    -------
+    float
+        Approximation of root of derivative given starting x and y values.
+    """
+    guess = initial_y - (initial_y - function(t, initial_x, initial_y) * step_size - inity) / (1 + derivate(t, initial_x, initial_y) * step_size) # Derivative with respect to x
+    print(guess)
+    if np.abs((guess - initial_y) / initial_y) < error:
+        return guess
+    else:
+        newton_raphson2DX(function, derivate, initial_x, guess, t, inity, step_size, error) 
 
 def rk4(x_start, x_finish, init_condition, num_steps, function):
     """
