@@ -39,6 +39,39 @@ def effector_cell_population_function():
     """
     return 0
 
+def newton_raphson(function, derivative, initial_guess, x, initial_y, step_size, error):
+    """
+    Solves a (set of) differential equations through the Newton-Raphson (Newton's) method. Simple method for root finding
+    
+    Parameters:
+    ----------
+    function : func
+        Function definition for which we are numerically solving
+    derivative : func
+        Derivative of function input
+    initial_guess : float
+        Initial guess for root
+    x : float
+        Initial x value
+    initial_y: float
+        Initial y value
+    step_size: int
+        Step size to determine how far we are looking for root
+    error: float
+        Newton's method requires a tolerance for how close the root is to predicted
+    
+    Returns:
+    -------
+    float
+        Approximation of root of derivative given starting x and y values.
+    """
+    guess = initial_guess - (initial_guess - function(x, initial_guess) * step_size - initial_y) / (1 + derivative(x, initial_guess) * step_size)
+
+    if np.abs((guess - initial_guess) / initial_guess) < error:
+        return guess
+    else:
+        newton_raphson(function, derivative, guess, x, initial_y, step_size, error)
+
 def rk4(x_start, x_finish, init_condition, num_steps, function):
     """
     Solves a (set of) differential equations through the Runge-Kutta (RK4) method
@@ -53,7 +86,9 @@ def rk4(x_start, x_finish, init_condition, num_steps, function):
         Number of steps to take
     init_condition : float
         Initial condition for the IVP of the ODE
-    
+    function : func
+        Function definition for which we are numerically solving
+
     Returns:
     -------
     int
