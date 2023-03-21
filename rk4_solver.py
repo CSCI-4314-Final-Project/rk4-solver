@@ -7,7 +7,7 @@ def tumor_cell_population_function(T,E,M):
     """
     Creates a differential equation to model a tumor cell population over time
     
-    Parameters: TODO
+    Parameters: 
     ----------
     r : float
         rate of tumor growth
@@ -25,7 +25,7 @@ def tumor_cell_population_function(T,E,M):
         rate of tumor cell death by chemotherapy drug
     M : float
         concentration of chemotherapy drug at time t
-    Returns: TODO
+    Returns: 
     -------
     float
         change in tumor cells after one timestep
@@ -42,7 +42,7 @@ def effector_cell_population_function(T,E,M):
     """
     Creates a differential equation to model an effector cell population over time
     
-    Parameters: TODO
+    Parameters: 
     ----------
     s : float
         Growth rate of normal / effector cells
@@ -62,7 +62,7 @@ def effector_cell_population_function(T,E,M):
         concentration fo chemotherapy drug
     K_e : float
         rate at which chemotherapy drugs kill effector cells
-    Returns: TODO
+    Returns: 
     -------
     float
         The change in efffector cells after one timestep
@@ -80,7 +80,7 @@ def chemotherapy_drug_concentration_function(M):
     """
     Creates a differential equation to model the concentration of chemotherapy drug over time
     
-    Parameters: TODO
+    Parameters: 
     ----------
     gamma : float
         rate of decrease in concentration of chemotherapy drug
@@ -88,7 +88,7 @@ def chemotherapy_drug_concentration_function(M):
         concentration fo chemotherapy drug
     V_m : float
         outside addition of drug, in the litterature, this is a function, not sure how it is a function of time. 
-    Returns: TODO
+    Returns: 
     -------
     float
         The change in chemotherapy drug concentration
