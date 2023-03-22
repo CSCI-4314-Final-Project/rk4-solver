@@ -3,6 +3,7 @@ import pandas as pd
 import matplotlib as plt
 import scipy.special as sp
 
+
 def tumor_cell_population_function(T,E,M):
     """
     Creates a differential equation to model a tumor cell population over time
@@ -112,7 +113,9 @@ def rk4(x_start, x_finish, init_condition, num_steps, function):
         Number of steps to take
     init_condition : float
         Initial condition for the IVP of the ODE
-    
+    function : func
+        Function definition for which we are numerically solving
+
     Returns:
     -------
     int
