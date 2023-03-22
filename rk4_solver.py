@@ -3,11 +3,12 @@ import pandas as pd
 import matplotlib as plt
 import scipy.special as sp
 
-def tumor_cell_population_function(r,T,b,a,E,g, K_t,M):
+
+def tumor_cell_population_function(T,E,M):
     """
     Creates a differential equation to model a tumor cell population over time
     
-    Parameters: TODO
+    Parameters: 
     ----------
     r : float
         rate of tumor growth
@@ -25,19 +26,24 @@ def tumor_cell_population_function(r,T,b,a,E,g, K_t,M):
         rate of tumor cell death by chemotherapy drug
     M : float
         concentration of chemotherapy drug at time t
-    Returns: TODO
+    Returns: 
     -------
     float
         change in tumor cells after one timestep
     """
+    r = 4.31 * 10**(-3)
+    b = 10**(-9)
+    a = 3.41 * 10**(-10)
+    g = 10**5
+    K_t = 1 # not sure what this is yet
     dT = r*T*(1-(b*T))-a*((E*T)/(T+g))-(K_t*M*T)
     return dT
 
-def effector_cell_population_function(s,mu,E,p,h,T,m,M,K_e):
+def effector_cell_population_function(T,E,M):
     """
     Creates a differential equation to model an effector cell population over time
     
-    Parameters: TODO
+    Parameters: 
     ----------
     s : float
         Growth rate of normal / effector cells
@@ -57,20 +63,25 @@ def effector_cell_population_function(s,mu,E,p,h,T,m,M,K_e):
         concentration fo chemotherapy drug
     K_e : float
         rate at which chemotherapy drugs kill effector cells
-
-    Returns: TODO
+    Returns: 
     -------
     float
         The change in efffector cells after one timestep
     """
-    dE = s-(mu*E) + p*((E*T)/(h+t)) - (m*E*T) - (K_e*M*E)
+    s = 1.2 * 10**4
+    mu = 4.12 * 10**(-2)
+    p = 0.015
+    h = 20.2
+    m = 2 * 10**(-11)
+    K_e = 1 # not sure what this is yet
+    dE = s-(mu*E) + p*((E*T)/(h+T)) - (m*E*T) - (K_e*M*E)
     return dE
 
-def chemotherapy_drug_concentration_function(gamma,M,V_m):
+def chemotherapy_drug_concentration_function(M):
     """
     Creates a differential equation to model the concentration of chemotherapy drug over time
     
-    Parameters: TODO
+    Parameters: 
     ----------
     gamma : float
         rate of decrease in concentration of chemotherapy drug
@@ -78,120 +89,15 @@ def chemotherapy_drug_concentration_function(gamma,M,V_m):
         concentration fo chemotherapy drug
     V_m : float
         outside addition of drug, in the litterature, this is a function, not sure how it is a function of time. 
-    Returns: TODO
+    Returns: 
     -------
     float
         The change in chemotherapy drug concentration
     """
+    gamma = 0.9
+    V_m = 1 # not sure what this is yet
     dM = -gamma*M+V_m
     return dM
-
-def timeAxis(start, end, stepNumber): # Helps with defining time access for numerical simulations. Will add docstring later
-    step_size = (end-start) / stepNumber
-    return [start + i * step_size for i in range(stepNumber)]
-
-def newton_raphson(function, derivative, initial_guess, t, initial_y, step_size, error):
-    """
-    Solves a (set of) differential equations through the Newton-Raphson (Newton's) method. Simple method for root finding
-    
-    Parameters:
-    ----------
-    function : func
-        Function definition for which we are numerically solving
-    derivative : func
-        Derivative of function input
-    initial_guess : float
-        Initial guess for root
-    t : int
-        timestep
-    initial_y: float
-        Initial y value
-    step_size: int
-        Step size to determine how far we are looking for root
-    error: float
-        Newton's method requires a tolerance for how close the root is to predicted
-    
-    Returns:
-    -------
-    float
-        Approximation of root of derivative given starting x and y values.
-    """
-    guess = initial_guess - (initial_guess - function(t, initial_guess) * step_size - initial_y) / (1 + derivative(t, initial_guess) * step_size) 
-    print(guess) 
-    if np.abs((guess - initial_guess) / initial_guess) < error:
-        return guess
-    else:
-        newton_raphson(function, derivative, guess, t, initial_y, step_size, error)
-
-def newton_raphson2DY(function, derivative, initial_x, initial_y, t, inity, step_size, error):
-    """
-    Solves a (set of) differential equations through the Newton-Raphson (Newton's) method. Simple method for root finding
-    
-    Parameters:
-    ----------
-    function : func
-        Function definition for which we are numerically solving
-    derivative : func
-        Derivative of function input
-    initial_guess : float
-        Initial guess for root
-    initial_x: float
-        Initial y value
-    initial_y: float
-        Initial y value
-    t : int
-        timestep
-    step_size: int
-        Step size to determine how far we are looking for root
-    error: float
-        Newton's method requires a tolerance for how close the root is to predicted
-    
-    Returns:
-    -------
-    float
-        Approximation of root of derivative given starting x and y values.
-    """
-    guess = initial_y - (initial_y - function(t, initial_y, initial_x) * step_size - inity) / (1 + derivative(t, initial_y, initial_x) * step_size) # Derivative with respect to y instead of x
-    print(guess) 
-    if np.abs((guess - initial_y) / initial_y) < error:
-        return guess
-    else:
-        newton_raphson2DY(function, derivative, initial_x, guess, t, inity, step_size, error)
-
-def newton_raphson2DX(function, derivate, initial_x, initial_y, t, inity, step_size, error):
-    """
-    Solves a (set of) differential equations through the Newton-Raphson (Newton's) method. Simple method for root finding
-    
-    Parameters:
-    ----------
-    function : func
-        Function definition for which we are numerically solving
-    derivative : func
-        Derivative of function input
-    initial_guess : float
-        Initial guess for root
-    initial_x: float
-        Initial y value
-    initial_y: float
-        Initial y value
-    t : int
-        timestep
-    step_size: int
-        Step size to determine how far we are looking for root
-    error: float
-        Newton's method requires a tolerance for how close the root is to predicted
-    
-    Returns:
-    -------
-    float
-        Approximation of root of derivative given starting x and y values.
-    """
-    guess = initial_y - (initial_y - function(t, initial_x, initial_y) * step_size - inity) / (1 + derivate(t, initial_x, initial_y) * step_size) # Derivative with respect to x
-    print(guess)
-    if np.abs((guess - initial_y) / initial_y) < error:
-        return guess
-    else:
-        newton_raphson2DX(function, derivate, initial_x, guess, t, inity, step_size, error) 
 
 def rk4(x_start, x_finish, init_condition, num_steps, function):
     """
