@@ -131,7 +131,6 @@ class Stability_Equilibirum_Analysis():
 
         # case one: stability analysis when E,T = 0
         if(self.V_m > ((self.r * self.gamma)/self.K_t)):
-            flag_0 = 1
             stableET = "asympotically stable"
         
         # case two: stability analysis when E = 0
@@ -139,14 +138,12 @@ class Stability_Equilibirum_Analysis():
         comparison1 = (((self.m*T_hat) + self.mu + self.K_e*(self.V_m/self.gamma)) * ((self.h + T_hat)/T_hat))
         comparison2 = (self.r * (1.0 - (2.0 * self.b * T_hat))) * (self.gamma/self.K_t)
         if(self.p > comparison1 and self.V_m < comparison2):
-            flag_1 = 1
             stableE = "asympotically stable"
         
         # case three: stability analysis when T = 0
         E_hat = p_2[0]
         comparison = (self.r - (self.K_t*(self.V_m/self.gamma))) * (self.g/E_hat)
         if(self.a > comparison):
-            flag_2 = 1
             stableT = "asympotically stable"
         
         with open("StabilityLog.txt", "w") as f:
