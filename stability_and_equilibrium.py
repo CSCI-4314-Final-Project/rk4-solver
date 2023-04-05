@@ -150,23 +150,49 @@ class Stability_Equilibirum_Analysis():
             stableT = "asympotically stable"
         
         with open("StabilityLog.txt", "w") as f:
-            f.write('Equilibrium solution when E,T=0 %s' % p_0)
+            f.write('EQUILIBRIUM AND STABILITY ANALYSIS LOG OUTPUT\n')
+            f.write('Model parameters: s, r, b, m, p, h, g, a, gamma, mu, K_e, K_t, V_m\n')
+            f.write('Inputted values: s=%s, r=%s, b=%s, m=%s, p=%s, h=%s, g=%s, a=%s, gamma=%s, mu=%s, K_e=%s, K_t=%s, V_m=%s \n\n' % (1.2e4, 4.31 * 10**(-3), 10**(-9), 2e-11, 0.015, 2.02e1, 10**5, 3.41 * 10**(-10), 0.9, 4.12e-2, 0.6, 1, 0.5))
+            f.write("Calculating equilibrium points for 3 situations (E and T = 0, E = 0, T= 0)\n\n")
+            
+            f.write("Equilibrium Equations: \n")
+            f.write("Calculations for when E and T = 0: E=0.0, T=0.0, M=V_m/gamma\n")
+            f.write("Calculations for when E = 0: E = 0.0, T = (r - (K_t*(V_m/gamma)))/(r * b), M = V_m/gamma\n")
+            f.write("Calculations for when T = 0: E=(s * gamma) / ((mu * gamma)+(K_e * V_m)), T=0.0,  M=V_m / gamma\n")
             f.write('\n')
-            f.write('Stability analysis: %s' % stableET)
+
+            f.write('Equilibrium Solutions Results\n')
+            f.write('Equilibrium solution when E,T=0:  E=%s, T=%s, M=%s \n' % (p_0[0], p_0[1],p_0[2]))
+            f.write('Equilibrium solution when E=0:  E=%s, T=%s, M=%s \n' % (p_1[0], p_1[1],p_1[2]))
+            f.write('Equilibrium solution when T=0:  E=%s, T=%s, M=%s \n' % (p_2[0], p_2[1],p_2[2]))
+            f.write('\n')
+
+            f.write('Calculating Stability analysis for the 3 equilibrium solutions\n\n')
+            f.write('Stability anlaysis calculations: \n')
+            f.write('Stability analysis when E,T=0: Asymptotically stable if (V_m > ((r * gamma)/K_t))\n')
+            f.write('Stability analysis when E=0: Asymptotically stable if p > (((m*T_hat)+mu+K_e*(V_m/gamma))*((h+T_hat)/T_hat)) AND V_m < (r *(1.0-(2.0*b*T_hat)))*(gamma/K_t)\n')
+            f.write('Stability analysis when T=0: Asymptotically stable if a > (r -(K_t*(V_m/gamma)))*(g/E_hat)\n\n')
+            
+            f.write('Stability Analysis Results for the 3 Equilibrium Solutions\n')
+            f.write('Stability analysis for E,T=0: %s \n' % stableET)
+            f.write('Stability analysis for E=0: %s \n' % stableE)
+            f.write('Stability analysis for T=0: %s \n' % stableT)
+            f.write('\n')
             f.write('\n')
             f.write('\n')
 
-            f.write('Equilibrium solution when E=0 %s' % p_1)
-            f.write('\n')
-            f.write('Stability analysis: %s' % stableE)
-            f.write('\n')
-            f.write('\n')
+            f.write('FINAL RESULTS\n')
+            f.write('Equilibrium and Stability Results when E,T=0\n')
+            f.write('Equilibrium solution: E=%s, T=%s, M=%s \n' % (p_0[0], p_0[1],p_0[2]))
+            f.write('Stabilty of this equilibrium solution: %s \n\n' % stableET)
 
-            f.write('Equilibrium solution when T=0 %s' % p_2)
-            f.write('\n')
-            f.write('Stability analysis: %s' % stableT)
-            f.write('\n')
-            f.write('\n')
+            f.write('Equilibrium and Stability Results when E=0\n')
+            f.write('Equilibrium solution: E=%s, T=%s, M=%s \n' % (p_1[0], p_1[1],p_1[2]))
+            f.write('Stabilty of this equilibrium solution: %s \n\n' % stableE)
+
+            f.write('Equilibrium and Stability Results when T=0\n')
+            f.write('Equilibrium solution: E=%s, T=%s, M=%s \n' % (p_2[0], p_2[1],p_2[2]))
+            f.write('Stabilty of this equilibrium solution: %s \n\n' % stableT)
 
             f.close()
         
@@ -176,5 +202,5 @@ class Stability_Equilibirum_Analysis():
 
 
 ####### To test 
-# st = Stability_Equilibirum_Analysis(1.2e4, 4.31 * 10**(-3), 10**(-9), 2e-11, 0.015, 2.02e1, 10**5, 3.41 * 10**(-10), 0.9, 4.12e-2, 0.6, 1, 0.5)
-# st.compute_stability_analysis()
+st = Stability_Equilibirum_Analysis(1.2e4, 4.31 * 10**(-3), 10**(-9), 2e-11, 0.015, 2.02e1, 10**5, 3.41 * 10**(-10), 0.9, 4.12e-2, 0.6, 1.0, 0.5)
+st.compute_stability_analysis()
