@@ -1,5 +1,5 @@
 class Stability_Equilibirum_Analysis():
-    def __init__(self, s, r, b, m, p, h, g, a, gamma, mu, K_e, K_t, V_m,):
+    def __init__(self, s, r, b, m, p, h, g, a, gamma, mu, K_e, K_t, V_m):
         """
         Initalize equilibrium analaysis with necessary parameter values 
 
@@ -126,12 +126,13 @@ class Stability_Equilibirum_Analysis():
 
         p_0, p_1, p_2 = self.compute_equilibrium_point()
 
-        # flags for each equilibrium point, 0 = asymptotically UNstable, 1 = asymptotically stable
-        flag_0, flag_1, flag_2 = 0,0,0
+        # flags for each equilibrium point
+        stableE, stableT, stableET = "asympotically unstable", "asympotically unstable", "asympotically unstable"
 
         # case one: stability analysis when E,T = 0
         if(self.V_m > ((self.r * self.gamma)/self.K_t)):
             flag_0 = 1
+            stableET = "asympotically stable"
         
         # case two: stability analysis when E = 0
         T_hat = p_1[1]
@@ -139,16 +140,41 @@ class Stability_Equilibirum_Analysis():
         comparison2 = (self.r * (1.0 - (2.0 * self.b * T_hat))) * (self.gamma/self.K_t)
         if(self.p > comparison1 and self.V_m < comparison2):
             flag_1 = 1
+            stableE = "asympotically stable"
         
         # case three: stability analysis when T = 0
         E_hat = p_2[0]
         comparison = (self.r - (self.K_t*(self.V_m/self.gamma))) * (self.g/E_hat)
         if(self.a > comparison):
             flag_2 = 1
+            stableT = "asympotically stable"
         
-        return [(p_0, flag_0), (p_1, flag_1), (p_2, flag_2)]
+        with open("StabilityLog.txt", "w") as f:
+            f.write('Equilibrium solution when E,T=0 %s' % p_0)
+            f.write('\n')
+            f.write('Stability analysis: %s' % stableET)
+            f.write('\n')
+            f.write('\n')
+
+            f.write('Equilibrium solution when E=0 %s' % p_1)
+            f.write('\n')
+            f.write('Stability analysis: %s' % stableE)
+            f.write('\n')
+            f.write('\n')
+
+            f.write('Equilibrium solution when T=0 %s' % p_2)
+            f.write('\n')
+            f.write('Stability analysis: %s' % stableT)
+            f.write('\n')
+            f.write('\n')
+
+            f.close()
+        
+        return [(p_0, stableET), (p_1, stableE), (p_2, stableT)]
 
 
 
 
-
+####### To test 
+# st = Stability_Equilibirum_Analysis(1.2e4, 4.31 * 10**(-3), 10**(-9), 2e-11, 0.015, 2.02e1, 10**5, 3.41 * 10**(-10), 0.9, 4.12e-2, 0.6, 1, 0.5)
+# st.compute_stability_analysis()

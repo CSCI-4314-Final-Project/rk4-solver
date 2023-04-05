@@ -1,0 +1,9 @@
+Equilibrium solution when E,T=0 [0.0, 0.0, 0.5555555555555556]
+Stability analysis: asympotically stable
+
+Equilibrium solution when E=0 [0.0, -127899200824.95488, 0.5555555555555556]
+Stability analysis: asympotically stable
+
+Equilibrium solution when T=0 [32039.87184051264, 0.0, 0.5555555555555556]
+Stability analysis: asympotically stable
+
