@@ -1,0 +1,43 @@
+EQUILIBRIUM AND STABILITY ANALYSIS LOG OUTPUT
+Model parameters: s, r, b, m, p, h, g, a, gamma, mu, K_e, K_t, V_m
+Inputted values: s=12000.0, r=0.00431, b=1e-09, m=2e-11, p=0.015, h=20.2, g=100000, a=3.41e-10, gamma=0.9, mu=0.0412, K_e=0.6, K_t=1, V_m=0.5 
+
+Calculating equilibrium points for 3 situations (E and T = 0, E = 0, T= 0)
+
+Equilibrium Equations: 
+Calculations for when E and T = 0: E=0.0, T=0.0, M=V_m/gamma
+Calculations for when E = 0: E = 0.0, T = (r - (K_t*(V_m/gamma)))/(r * b), M = V_m/gamma
+Calculations for when T = 0: E=(s * gamma) / ((mu * gamma)+(K_e * V_m)), T=0.0,  M=V_m / gamma
+
+Equilibrium Solutions Results
+Equilibrium solution when E,T=0:  E=0.0, T=0.0, M=0.5555555555555556 
+Equilibrium solution when E=0:  E=0.0, T=-127899200824.95488, M=0.5555555555555556 
+Equilibrium solution when T=0:  E=32039.87184051264, T=0.0, M=0.5555555555555556 
+
+Calculating Stability analysis for the 3 equilibrium solutions
+
+Stability anlaysis calculations: 
+Stability analysis when E,T=0: Asymptotically stable if (V_m > ((r * gamma)/K_t))
+Stability analysis when E=0: Asymptotically stable if p > (((m*T_hat)+mu+K_e*(V_m/gamma))*((h+T_hat)/T_hat)) AND V_m < (r *(1.0-(2.0*b*T_hat)))*(gamma/K_t)
+Stability analysis when T=0: Asymptotically stable if a > (r -(K_t*(V_m/gamma)))*(g/E_hat)
+
+Stability Analysis Results for the 3 Equilibrium Solutions
+Stability analysis for E,T=0: asympotically stable 
+Stability analysis for E=0: asympotically stable 
+Stability analysis for T=0: asympotically stable 
+
+
+
+FINAL RESULTS
+Equilibrium and Stability Results when E,T=0
+Equilibrium solution: E=0.0, T=0.0, M=0.5555555555555556 
+Stabilty of this equilibrium solution: asympotically stable 
+
+Equilibrium and Stability Results when E=0
+Equilibrium solution: E=0.0, T=-127899200824.95488, M=0.5555555555555556 
+Stabilty of this equilibrium solution: asympotically stable 
+
+Equilibrium and Stability Results when T=0
+Equilibrium solution: E=32039.87184051264, T=0.0, M=0.5555555555555556 
+Stabilty of this equilibrium solution: asympotically stable 
+
